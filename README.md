@@ -1,4 +1,6 @@
 <div align="center">
+
+<pre>
   
 ██╗  ██╗██╗██████╗ ███████╗
 ██║  ██║██║██╔══██╗██╔════╝
@@ -6,10 +8,12 @@
 ██╔══██║██║██╔══██╗██╔══╝  
 ██║  ██║██║██║  ██║███████╗
 ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚══════╝
+  
+</pre>
 
-whoami --full
-Recruitment Manager // InfoSec & HR Talent Ops // Since 2020
-[
+Recruitment Manager — InfoSec & HR Talent Ops
+
+
 [
 [
 [
