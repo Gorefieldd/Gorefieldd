@@ -105,6 +105,6 @@ CISO / Head of Security
 <a href="https://t.me/Gorefield">Message me on Telegram</a>
 </p>
 
-<p><sub>Resume last synced: July 28, 2026 · Nizhny Novgorod, RU 🇷🇺</sub></p>
+<p><sub>Resume last synced: July 28, 2026 · Nizhny Novgorod, RU </sub></p>
 
 </div>
