@@ -44,11 +44,13 @@ status: OPEN_TO_OPPORTUNITIES 🟢
 <h2><code>&gt; quick_access.links</code></h2>
 
 <p align="center">
-<a href="./resume.pdf">📄 Resume (EN)</a>
-&nbsp;|&nbsp;
-<a href="./resume_slides.html">🎯 Interactive Deck</a>
-&nbsp;|&nbsp;
-<a href="https://t.me/Gorefield">✈️ Telegram</a>
+  <a href="./resume.pdf">📄 Resume (EN)</a>
+  &nbsp;|&nbsp;
+  <a href="https://gorefieldd.github.io/Gorefieldd/resume_slides.html" target="_blank" rel="noopener noreferrer">
+    🎯 Interactive Deck
+  </a>
+  &nbsp;|&nbsp;
+  <a href="https://t.me/Gorefield">✈️ Telegram</a>
 </p>
 
 <hr/>
