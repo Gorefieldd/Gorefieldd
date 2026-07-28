@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="slides-format" content="viewport">
+<title>Artem Koshmov // InfoSec Recruitment Lead</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+<style type="text/tailwindcss">
+@theme {
+  --color-bg: #0A0A0A;
+  --color-bg-deep: #050505;
+  --color-surface: #111111;
+  --color-text: #E5FFE9;
+  --color-text-secondary: #7CFF9E;
+  --color-text-muted: #4A7856;
+  --color-accent-1: #00FF41;
+  --color-accent-2: #FFA500;
+  --color-accent-3: #FF0000;
+  --color-glass-bg: rgba(0,255,65,0.03);
+  --color-glass-border: rgba(0,255,65,0.15);
+  --color-vignette: rgba(0,0,0,0.5);
+  --font-display: 'JetBrains Mono', monospace;
+  --font-body: 'JetBrains Mono', monospace;
+}
+</style>
+
+<style>
+:root { --color-bg: #0A0A0A; --color-text: #E5FFE9; --glow-color-rgb: 0,255,65; }
+*, *::before, *::after { box-sizing: border-box; }
+html, body { background: var(--color-bg); margin: 0; }
+body { font-family: var(--font-body); color: var(--color-text); overflow: hidden; height: 100vh; width: 100vw; }
+.deck { width: 100vw; height: 100vh; position: relative; }
+.slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--color-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transform: scale(0.95); transition: opacity 0.7s ease, transform 0.7s ease; pointer-events: none; overflow: hidden; }
+.slide.active { opacity: 1; transform: scale(1); pointer-events: all; }
+.slide > .content { position: relative; z-index: 2; width: 100%; max-width: 1100px; padding: clamp(1.5rem, 4vw, 4rem); }
+.nav-controls { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; z-index: 100; background: var(--color-glass-bg); backdrop-filter: blur(10px); padding: 10px 24px; border-radius: 6px; border: 1px solid var(--color-glass-border); }
+.nav-btn { width: 40px; height: 40px; border: none; background: var(--color-glass-bg); color: var(--color-accent-1); border-radius: 4px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+.nav-btn:hover { background: var(--color-glass-border); }
+.slide-dots { display: flex; gap: 8px; }
+.slide-dots .dot { width: 8px; height: 8px; border-radius: 2px; background: var(--color-glass-border); cursor: pointer; transition: background 0.3s, transform 0.3s; }
+.slide-dots .dot.active { background: var(--color-accent-1); transform: scale(1.3); box-shadow: 0 0 8px rgba(0,255,65,0.8); }
+.slide-counter { font-size: 0.8rem; color: var(--color-text-muted); min-width: 40px; text-align: center; }
+.reveal { opacity: 0; transform: translateY(20px); }
+
+.text-glow { text-shadow: 0 0 20px rgba(var(--glow-color-rgb), 0.5), 0 0 40px rgba(var(--glow-color-rgb), 0.2); }
+.stat-glow { text-shadow: 0 0 30px rgba(var(--glow-color-rgb), 0.6), 0 0 60px rgba(var(--glow-color-rgb), 0.25); }
+@keyframes glow-pulse {
+  0%, 100% { text-shadow: 0 0 20px rgba(var(--glow-color-rgb), 0.5), 0 0 40px rgba(var(--glow-color-rgb), 0.2); }
+  50% { text-shadow: 0 0 30px rgba(var(--glow-color-rgb), 0.8), 0 0 60px rgba(var(--glow-color-rgb), 0.3); }
+}
+.glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
+
+@keyframes float-slow {
+  0% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(60px, -50px) scale(1.12); }
+  50% { transform: translate(-40px, 40px) scale(0.9); }
+  75% { transform: translate(50px, 20px) scale(1.08); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes float-drift {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(-50px, -60px) scale(1.15) rotate(3deg); }
+  66% { transform: translate(40px, 30px) scale(0.88) rotate(-2deg); }
+  100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+}
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+.gradient-mesh { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.blob { position: absolute; border-radius: 50%; filter: blur(80px); animation: float-slow 10s ease-in-out infinite; }
+.blob:nth-child(2) { animation: float-drift 14s ease-in-out infinite; }
+.blob:nth-child(3) { animation: float-slow 18s ease-in-out infinite reverse; }
+
+.slide::before {
+  content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat; background-size: 256px 256px; opacity: 0.04; mix-blend-mode: overlay;
+}
+.slide::after {
+  content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 50%, var(--color-vignette) 100%);
+}
+
+/* scanline overlay */
+.scanline { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0,255,65,0.025) 0px, rgba(0,255,65,0.025) 1px, transparent 1px, transparent 3px); opacity: 0.5; }
+
+.bar-chart { display: flex; align-items: flex-end; gap: clamp(0.4rem, 1vw, 0.75rem); height: clamp(120px, 20vh, 200px); }
+.bar-col { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; flex: 1; }
+.bar { border-radius: 2px 2px 0 0; width: 100%; }
+.bar-track { background: var(--color-glass-bg); border-radius: 3px; overflow: hidden; height: 22px; position: relative; border: 1px solid var(--color-glass-border); }
+.bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--color-accent-1), var(--color-accent-2)); box-shadow: 0 0 10px rgba(0,255,65,0.4); }
+
+.term-window { border: 1px solid var(--color-glass-border); border-radius: 6px; background: rgba(0,10,3,0.6); box-shadow: 0 0 30px rgba(0,255,65,0.06), inset 0 0 40px rgba(0,255,65,0.02); }
+.term-header { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-bottom: 1px solid var(--color-glass-border); }
+.term-dot { width: 10px; height: 10px; border-radius: 50%; }
+.blink { animation: blink 1s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.crt-flicker { animation: flicker 6s infinite; }
+@keyframes flicker { 0%, 97%, 100% { opacity: 1; } 98% { opacity: 0.85; } 99% { opacity: 0.95; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+}
+
+/* per-slide */
+.tag-chip { border: 1px solid var(--color-glass-border); background: var(--color-glass-bg); color: var(--color-text-secondary); padding: 5px 12px; border-radius: 3px; font-size: 0.75rem; }
+.card-hack { background: var(--color-glass-bg); border: 1px solid var(--color-glass-border); border-radius: 6px; padding: 1.5rem; transition: all 0.3s; }
+.card-hack:hover { border-color: var(--color-accent-1); box-shadow: 0 0 20px rgba(0,255,65,0.15); transform: translateY(-4px); }
+</style>
+</head>
+<body>
+
+<div class="mouse-spotlight" style="position:fixed;inset:0;z-index:99;pointer-events:none;"></div>
+
+<div class="deck">
+
+<!-- SLIDE 1: TITLE -->
+<div class="slide slide-1 active" data-slide="1">
+  <div class="gradient-mesh">
+    <div class="blob" style="width: 500px; height: 500px; top: -120px; right: -100px; background: var(--color-accent-1); opacity: 0.14;"></div>
+    <div class="blob" style="width: 300px; height: 300px; bottom: -80px; left: -60px; background: var(--color-accent-2); opacity: 0.08;"></div>
+    <div class="blob" style="width: 220px; height: 220px; top: 40%; left: 10%; background: var(--color-accent-3); opacity: 0.06;"></div>
+  </div>
+  <canvas class="particle-canvas" style="position: absolute; inset: 0; z-index: 1;"></canvas>
+  <div class="scanline"></div>
+  <div class="content text-center crt-flicker">
+    <p class="text-accent-1 text-sm tracking-[6px] uppercase mb-4 reveal">[ SYSTEM ACCESS: GRANTED ]</p>
+    <div class="text-[100px] mb-4 animate-[float_3s_ease-in-out_infinite] reveal">🛡️</div>
+    <h1 class="text-[clamp(2.2rem,6vw,4.5rem)] font-black text-accent-1 text-glow tracking-tight mb-4 reveal">ARTEM_KOSHMOV.exe</h1>
+    <p class="text-[clamp(0.85rem,1.3vw,1.1rem)] text-text-secondary tracking-[4px] uppercase reveal">&gt; Recruitment Manager // Infosec recruitment enthusiast</p>
+    <p class="text-text-muted text-xs mt-6 reveal">root@nizhny-novgorod:~$ whoami --verbose</p>
+  </div>
+</div>
+
+<!-- SLIDE 2: PROFILE / WHOAMI -->
+<div class="slide slide-2" data-slide="2">
+  <div class="gradient-mesh">
+    <div class="blob" style="width: 350px; height: 350px; top: -80px; right: -80px; background: var(--color-accent-1); opacity: 0.08;"></div>
+    <div class="blob" style="width: 250px; height: 250px; bottom: -60px; left: -40px; background: var(--color-accent-2); opacity: 0.05;"></div>
+  </div>
+  <div class="content">
+    <p class="text-accent-1 text-xs tracking-[4px] uppercase mb-2 reveal">// 01 — TARGET PROFILE</p>
+    <h2 class="text-[clamp(1.8rem,4vw,2.6rem)] font-bold text-accent-1 mb-6 reveal">whoami --full</h2>
+    <div class="term-window reveal">
+      <div class="term-header">
+        <div class="term-dot" style="background:#FF0000;"></div>
+        <div class="term-dot" style="background:#FFA500;"></div>
+        <div class="term-dot" style="background:#00FF41;"></div>
+        <span class="text-text-muted text-xs ml-2">profile.sh</span>
+      </div>
+      <div class="p-6 text-sm space-y-2">
+        <p><span class="text-accent-2">NAME:</span> Artem Koshmov</p>
+        <p><span class="text-accent-2">LOCATION:</span> Nizhny Novgorod, Russia</p>
+        <p><span class="text-accent-2">ROLE:</span> Recruitment Manager / InfoSec &amp; HR</p>
+        <p><span class="text-accent-2">STATUS:</span> Full-time / Part-time / Project · Remote or On-site · Relocation OK</p>
+        <p><span class="text-accent-2">CONTACT:</span> +7 (953) 567-5756 · akoshmov@gmail.com · tg: @Gorefield</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-3 gap-4 mt-6">
+      <div class="card-hack reveal text-center"><p class="text-2xl font-bold text-accent-1 stat-glow" data-suffix=" yrs 10mo">5</p><p class="text-text-muted text-xs mt-1">TOTAL EXPERIENCE</p></div>
+      <div class="card-hack reveal text-center"><p class="text-2xl font-bold text-accent-1 stat-glow" data-count="5">0</p><p class="text-text-muted text-xs mt-1">TEAM MEMBERS LED</p></div>
+      <div class="card-hack reveal text-center"><p class="text-2xl font-bold text-accent-1 stat-glow">B1</p><p class="text-text-muted text-xs mt-1">ENGLISH LEVEL</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: MISSION / TARGET ROLE -->
+<div class="slide slide-3" data-slide="3">
+  <div class="gradient-mesh">
+    <div class="blob" style="width: 350px; height: 350px; top: -60px; left: -60px; background: var(--color-accent-2); opacity: 0.08;"></div>
+    <div class="blob" style="width: 260px; height: 260px; bottom: -60px; right: -40px; background: var(--color-accent-1); opacity: 0.07;"></div>
+  </div>
+  <div class="content">
+    <p class="text-accent-1 text-xs tracking-[4px] uppercase mb-2 reveal">// 02 — MISSION PARAMETERS</p>
+    <h2 class="text-[clamp(1.8rem,4vw,2.6rem)] font-bold text-accent-1 mb-6 reveal">target_role.config</h2>
+    <div class="grid grid-cols-2 gap-6">
+      <div class="card-hack reveal">
+        <p class="text-accent-2 text-sm mb-2">&gt; ROLE</p>
+        <p class="text-lg font-bold text-text mb-4">Recruitment Manager</p>
+        <p class="text-accent-2 text-sm mb-2">&gt; SPECIALIZATIONS</p>
+        <p class="text-text-secondary text-sm">HR Manager · Product Manager · Talent Acquisition Specialist</p>
+      </div>
+      <div class="card-hack reveal">
+        <p class="text-accent-2 text-sm mb-2">&gt; EMPLOYMENT</p>
+        <p class="text-text-secondary text-sm mb-4">Full-time / Part-time / Project-based</p>
+        <p class="text-accent-2 text-sm mb-2">&gt; FORMAT</p>
+        <p class="text-text-secondary text-sm">100% Remote · Occasional business trips OK</p>
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-2 mt-6">
+      <span class="tag-chip reveal">SOC</span>
+      <span class="tag-chip reveal">EDR</span>
+      <span class="tag-chip reveal">Reverse Engineering</span>
+      <span class="tag-chip reveal">Pentest</span>
+      <span class="tag-chip reveal">Malware Analysis</span>
+      <span class="tag-chip reveal">R&D / C++ / Rust / Golang</span>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: TIMELINE OVERVIEW -->
+<div class="slide slide-4" data-slide="4">
+  <div class="gradient-mesh">
+    <div class="blob" style="width: 320px; height: 320px; top: -60px; right: -60px; background: var(--color-accent-1); opacity: 0.07;"></div>
+    <div class="blob" style="width: 260px; height: 260px; bottom: -60px; left: -60px; background: var(--color-accent-3); opacity: 0.05;"></div>
+  </div>
+  <div class="content">
+    <p class="text-accent-1 text-xs tracking-[4px] uppercase mb-2 reveal">// 03 — EXECUTION LOG</p>
+    <h2 class="text-[clamp(1.8rem,4vw,2.6rem)] font-bold text-accent-1 mb-8 reveal">career_timeline.log</h2>
+    <div class="relative pl-8" style="border-left: 2px solid var(--color-accent-1);">
+      <div class="mb-6 reveal relative">
+        <div class="absolute -left-[41px] top-1 w-3.5 h-3.5 rounded-full" style="background:var(--color-accent-1); box-shadow:0 0 10px rgba(0,255,65,0.8);"></div>
+        <p class="text-accent-2 text-xs">MAY 2023 — PRESENT</p>
+        <p class="text-text font-bold">Positive Technologies — Information Security Recruitment Lead</p>
+      </div>
+      <div class="mb-6 reveal relative">
+        <div class="absolute -left-[41px] top-1 w-3.5 h-3.5 rounded-full" style="background:var(--color-accent-1); box-shadow:0 0 10px rgba(0,255,65,0.8);"></div>
+        <p class="text-accent-2 text-xs">APR 2022 — MAY 2023</p>
+        <p class="text-text font-bold">Positive Technologies — Information Security Recruiter</p>
+      </div>
+      <div class="mb-6 reveal relative">
+        <div class="absolute -left-[41px] top-1 w-3.5 h-3.5 rounded-full" style="background:var(--color-accent-2); box-shadow:0 0 10px rgba(255,165,0,0.6);"></div>
+        <p class="text-accent-2 text-xs">MAR 2021 — APR 2022</p>
+        <p class="text-text font-bold">Kelly Services — Talent Acquisition Expert</p>
+      </div>
+      <div class="reveal relative">
+        <div class="absolute -left-[41px] top-1 w-3.5 h-3.5 rounded-full" style="background:var(--color-accent-2); box-shadow:0 0 10px rgba(255,165,0,0.6);"></div>
+        <p class="text-accent-2 text-xs">JUL 2020 — FEB 2021</p>
+        <p class="text-text font-bold">AGAT Group — HR Manager</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: PT CURRENT ROLE - LEADERSHIP -->
+<div class="slide slide-5" data-slide="5">
+  <div class="gradient-mesh">
+    <div class="blob" style="width: 340px; height: 340px; top: -70px; left: -60px; background: var(--color-accent-1); opacity: 0.08;"></div>
+    <div class="blob" style="width: 240px; height: 240px; bottom: -50px; right: -40px; background: var(--color-accent-2); opacity: 0.06;"></div>
+  </div>
+  <div class="content">
+    <p class="text-accent-1 text-xs tracking-[4px] uppercase mb-2 reveal">// 04 — CURRENT DEPLOYMENT</p>
+    <h2 class="text-[clamp(1.6rem,3.5vw,2.3rem)] font-bold text-accent-1 mb-1 reveal">Positive Technologies</h2>
+    <p class="text-text-muted text-sm mb-6 reveal">InfoSec Recruitment Lead · May 2023 — Present (3 yrs 3 mo)</p>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="card-hack reveal">
+        <p class="text-accent-2 font-bold text-sm mb-1">&gt; TEAM_BUILT</p>
+        <p class="text-text-secondary text-sm">Built InfoSec recruitment function from zero. Grew and led team of 5 recruiters (3 mid, 1 senior, 1 junior) → record KPI results.</p>
+      </div>
+      <div class="card-hack reveal">
+        <p class="text-accent-2 font-bold text-sm mb-1">&gt; PARTNER_MODEL</p>
+        <p class="text-text-secondary text-sm">Established "Recruiter = Partner" model with hiring managers; mentoring, performance reviews, goal-setting.</p>
+      </div>
+      <div class="card-hack reveal">
+        <p class="text-accent-2 font-bold text-sm mb-1">&gt; ANALYTICS</p>
+        <p class="text-text-secondary text-sm">Quarterly/annual reporting to top management; continuous KPI monitoring and process optimization.</p>
+      </div>
+      <div class="card-hack reveal">
+        <p class="text-accent-2 font-bold text-sm mb-1">&gt; HR_TECH</p>
+        <p class="text-text-secondary text-sm">Deployed onboarding platform, Jira for ATS tracking, VBA automation scripts, and AI-driven sourcing.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: PT PRIOR ROLE - TECHNICAL RECRUITING -->
+<div class="slide slide-6" data-slide="6">
+  <div class="gradient-mesh">
+    <div class="blob" style="width: 320px; height: 320px; top: -60px; right: -60px; background: var(--color-accent-3); opacity: 0.06;"></div>
+    <div class="blob" style="width: 260px; height: 260px; bottom: -60px; left: -50px; background: var(--color-accent-1); opacity: 0.07;"></div>
+  </div>
+  <div class="content">
+    <p class="text-accent-1 text-xs tracking-[4px] uppercase mb-2 reveal">// 05 — TECHNICAL RECON</p>
+    <h2 class="text-[clamp(1.6rem,3.5vw,2.3rem)] font-bold text-accent-1 mb-1 reveal">Information Security Recruiter</h2>
+    <p class="text-text-muted text-sm mb-6 reveal">Positive Technologies · Apr 2022 — May 2023</p>
+    <ul class="space-y-3 text-text-secondary text-base">
+      <li class="reveal flex gap-3"><span class="text-accent-1">&gt;</span>Full-cycle recruitment: needs analysis → job creation → onboarding.</li>
+      <li class="reveal flex gap-3"><span class="text-accent-1">&gt;</span>Built sourcing maps by role; deep labor-market and target-audience analysis.</li>
+      <li class="reveal flex gap-3"><span class="text-accent-1">&gt;</span>Closed niche roles: pentesters, reverse engineers, malware analysts, security researchers.</li>
+      <li class="reveal flex gap-3"><span class="text-accent-1">&gt;</span>Sourced R&amp;D developers across C/C++, Assembly, C#, Golang, Rust, Python.</li>
+      <li class="reveal flex gap-3"><span class="text-accent-1">&gt;</span>Offer negotiation, objection handling, and stakeholder alignment at every stage.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SLIDE 7: EARLIER EXPERIENCE (Kelly + AGAT) -->
+<div class="slide slide-7" data-slide="7">
+  <div class="gradient-mesh">
+    <div class="blob" style="width: 320px; height: 320px; top: -60px; left: -60px; background: var(--color-accent-2); opacity: 0.07;"></div>
+    <div class="blob" style="width: 240px; height: 240px; bottom: -50px; right: -40px; background: var(--color-accent-1); opacity: 0.06;"></div>
+  </div>
+  <div class="content">
+    <p class="text-accent-1 text-xs tracking-[4px] uppercase mb-2 reveal">// 06 — LEGACY SYSTEMS</p>
+    <h2 class="text-[clamp(1.8rem,4vw,2.6rem)] font-bold text-accent-1 mb-6 reveal">early_career.log</h2>
+    <div class="grid grid-cols-2 gap-6">
+      <div class="card-hack reveal">
+        <p class="text-accent-2 font-bold text-sm mb-2">KELLY SERVICES</p>
+        <p class="text-text-muted text-xs mb-3">Talent Acquisition Expert · 2021-2022</p>
+        <p class="text-text-secondary text-sm">Client briefing &amp; profile alignment, end-to-end sourcing, workforce planning consulting, market analysis reports.</p>
+      </div>
+      <div class="card-hack reveal">
+        <p class="text-accent-2 font-bold text-sm mb-2">AGAT GROUP</p>
+        <p class="text-text-muted text-xs mb-3">HR Manager · 2020-2021</p>
+        <p class="text-text-secondary text-sm">Full-cycle HR: recruiting, job profiling, onboarding, employee development, training, and motivation programs.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: SKILLS MATRIX (BAR CHART) -->
+<div class="slide slide-8" data-slide="8">
+  <div class="gradient-mesh">
+    <div class="blob" style="width: 340px; height: 340px; top: -70px; right: -60px; background: var(--color-accent-1); opacity: 0.08;"></div>
+    <div class="blob" style="width: 240px; height: 240px; bottom: -50px; left: -40px; background: var(--color-accent-2); opacity: 0.06;"></div>
+  </div>
+  <div class="content">
+    <p class="text-accent-1 text-xs tracking-[4px] uppercase mb-2 reveal">// 07 — SKILL MATRIX</p>
+    <h2 class="text-[clamp(1.8rem,4vw,2.6rem)] font-bold text-accent-1 mb-6 reveal">skills.scan()</h2>
+    <div class="space-y-3 reveal">
+      <div class="flex items-center gap-3">
+        <span class="text-text-secondary text-sm w-40">IT Recruitment</span>
+        <div class="bar-track flex-1"><div class="bar-fill" data-width="96" style="width:0%"></div></div>
+        <span class="text-accent-1 text-xs w-10">96%</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-text-secondary text-sm w-40">Leadership</span>
+        <div class="bar-track flex-1"><div class="bar-fill" data-width="90" style="width:0%"></div></div>
+        <span class="text-accent-1 text-xs w-10">90%</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-text-secondary text-sm w-40">Sourcing / Boolean</span>
+        <div class="bar-track flex-1"><div class="bar-fill" data-width="94" style="width:0%"></div></div>
+        <span class="text-accent-1 text-xs w-10">94%</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-text-secondary text-sm w-40">Business Analysis</span>
+        <div class="bar-track flex-1"><div class="bar-fill" data-width="82" style="width:0%"></div></div>
+        <span class="text-accent-1 text-xs w-10">82%</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-text-secondary text-sm w-40">English (B1)</span>
+        <div class="bar-track flex-1"><div class="bar-fill" data-width="60" style="width:0%"></div></div>
+        <span class="text-accent-1 text-xs w-10">60%</span>
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-2 mt-8">
+      <span class="tag-chip reveal">E-Staff</span>
+      <span class="tag-chip reveal">Huntflow</span>
+      <span class="tag-chip reveal">Jira</span>
+      <span class="tag-chip reveal">Project Management</span>
+      <span class="tag-chip reveal">Business Consulting</span>
+      <span class="tag-chip reveal">HR Brand Management</span>
+      <span class="tag-chip reveal">Customer Relationship Management</span>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: EDUCATION + CERTS -->
+<div class="slide slide-9" data-slide="9">
+  <div class="gradient-mesh">
+    <div class="blob" style="width: 320px; height: 320px; top: -60px; left: -60px; background: var(--color-accent-1); opacity: 0.07;"></div>
+    <div class="blob" style="width: 240px; height: 240px; bottom: -50px; right: -40px; background: var(--color-accent-3); opacity: 0.05;"></div>
+  </div>
+  <div class="content">
+    <p class="text-accent-1 text-xs tracking-[4px] uppercase mb-2 reveal">// 08 — TRAINING LOGS</p>
+    <h2 class="text-[clamp(1.8rem,4vw,2.6rem)] font-bold text-accent-1 mb-6 reveal">education.db</h2>
+    <div class="grid grid-cols-2 gap-6">
+      <div class="card-hack reveal">
+        <p class="text-accent-2 font-bold text-sm mb-1">🎓 BACHELOR'S DEGREE — 2022</p>
+        <p class="text-text font-bold text-sm mb-1">RANEPA</p>
+        <p class="text-text-secondary text-sm">Faculty of Management, State and Municipal Administration</p>
+      </div>
+      <div class="card-hack reveal">
+        <p class="text-accent-2 font-bold text-sm mb-1">🌐 LANGUAGES</p>
+        <p class="text-text font-bold text-sm mb-1">Russian — Native</p>
+        <p class="text-text-secondary text-sm">English — B1 (Intermediate)</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: CLOSING / CONTACT -->
+<div class="slide slide-10" data-slide="10">
+  <div class="gradient-mesh">
+    <div class="blob" style="width: 480px; height: 480px; top: -100px; left: -100px; background: var(--color-accent-1); opacity: 0.15;"></div>
+    <div class="blob" style="width: 300px; height: 300px; bottom: -80px; right: -60px; background: var(--color-accent-2); opacity: 0.1;"></div>
+    <div class="blob" style="width: 220px; height: 220px; top: 40%; right: 20%; background: var(--color-accent-3); opacity: 0.06;"></div>
+  </div>
+  <canvas class="particle-canvas" style="position: absolute; inset: 0; z-index: 1;"></canvas>
+  <div class="scanline"></div>
+  <div class="content text-center">
+    <p class="text-accent-1 text-sm tracking-[6px] uppercase mb-4 reveal">[ CONNECTION ESTABLISHED ]</p>
+    <h2 class="text-[clamp(2rem,5vw,3.5rem)] font-black text-accent-1 text-glow mb-4 reveal">LET'S_CONNECT()</h2>
+    <p class="text-text-secondary text-base reveal">akoshmov@gmail.com &nbsp;·&nbsp; +7 (953) 567-5756 &nbsp;·&nbsp; Telegram: @Gorefield</p>
+    <p class="text-text-muted text-xs mt-6 blink reveal">root@nizhny-novgorod:~$ _</p>
+  </div>
+</div>
+
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="changeSlide(-1)">&#8249;</button>
+  <div class="slide-dots" id="dots"></div>
+  <button class="nav-btn" onclick="changeSlide(1)">&#8250;</button>
+  <span class="slide-counter" id="counter">1 / 10</span>
+</div>
+
+<script>
+let current = 1;
+const total = document.querySelectorAll('.slide').length;
+const dotsContainer = document.getElementById('dots');
+const counter = document.getElementById('counter');
+for (let i = 1; i <= total; i++) { const dot = document.createElement('div'); dot.className = 'dot' + (i === 1 ? ' active' : ''); dot.onclick = () => goToSlide(i); dotsContainer.appendChild(dot); }
+function goToSlide(n) {
+  const prev = document.querySelector('.slide.active');
+  const next = document.querySelector(`.slide[data-slide="${n}"]`);
+  if (prev) prev.classList.remove('active');
+  if (next) { next.classList.add('active'); animateSlide(next); }
+  current = n; updateNav();
+}
+function changeSlide(dir) { let next = current + dir; if (next < 1) next = total; if (next > total) next = 1; goToSlide(next); }
+function updateNav() { document.querySelectorAll('.dot').forEach((d, i) => { d.classList.toggle('active', i + 1 === current); }); counter.textContent = current + ' / ' + total; }
+document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); } });
+let touchStartX = 0;
+document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', (e) => { const diff = touchStartX - e.changedTouches[0].clientX; if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1); });
+
+function animateSlide(slide) {
+  slide.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transition = 'none';
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.offsetHeight;
+    const delay = i * 0.08;
+    el.style.transition = `opacity 0.35s ease ${delay}s, transform 0.35s ease ${delay}s`;
+    el.style.opacity = '1';
+    el.style.transform = 'translateY(0px)';
+  });
+  animateSlideEffects(slide);
+}
+
+function animateSlideEffects(slide) {
+  slide.querySelectorAll('[data-count]:not(.counted)').forEach(el => {
+    el.classList.add('counted');
+    const target = parseInt(el.dataset.count);
+    const suffix = el.dataset.suffix || '', prefix = el.dataset.prefix || '';
+    let cur = 0; const step = target / 40;
+    const timer = setInterval(() => { cur += step; if (cur >= target) { cur = target; clearInterval(timer); } el.textContent = prefix + Math.round(cur).toLocaleString() + suffix; }, 30);
+  });
+  slide.querySelectorAll('.bar-fill:not(.fill-init)').forEach((bar, i) => {
+    bar.classList.add('fill-init');
+    bar.style.width = '0%'; bar.style.transition = `width 0.6s ease ${i * 0.1}s`; bar.offsetHeight; bar.style.width = bar.dataset.width + '%';
+  });
+}
+
+document.addEventListener('mousemove', (e) => {
+  const spotlight = document.querySelector('.mouse-spotlight');
+  if (spotlight) {
+    const rgb = getComputedStyle(document.documentElement).getPropertyValue('--glow-color-rgb').trim() || '0,255,65';
+    spotlight.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(${rgb}, 0.06), transparent 40%)`;
+  }
+});
+
+window.initParticles = function(canvas, options) {
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
+  const interactive = options.interactive !== false;
+  const count = options.count || (interactive ? 55 : 18);
+  let mx = -1000, my = -1000;
+  const rgb = getComputedStyle(document.documentElement).getPropertyValue('--glow-color-rgb').trim() || '0,255,65';
+  const [r, g, b] = rgb.split(',').map(Number);
+  const particles = Array.from({ length: count }, () => ({
+    x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+    vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
+    size: Math.random() * 2.5 + 0.8, alpha: Math.random() * 0.35 + 0.1
+  }));
+  if (interactive) {
+    canvas.addEventListener('mousemove', (e) => { const rect = canvas.getBoundingClientRect(); mx = e.clientX - rect.left; my = e.clientY - rect.top; });
+    canvas.addEventListener('mouseleave', () => { mx = -1000; my = -1000; });
+  }
+  (function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      if (interactive) { const dx = p.x - mx, dy = p.y - my, dist = Math.sqrt(dx * dx + dy * dy); if (dist < 120) { const force = (120 - dist) / 120 * 2; p.vx += (dx / dist) * force * 0.1; p.vy += (dy / dist) * force * 0.1; } }
+      p.vx *= 0.98; p.vy *= 0.98; p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${p.alpha})`; ctx.fill();
+    });
+    requestAnimationFrame(animate);
+  })();
+};
+document.querySelectorAll('.particle-canvas').forEach(c => window.initParticles(c, { interactive: true, count: 55 }));
+document.querySelectorAll('.particle-canvas-ambient').forEach(c => window.initParticles(c, { interactive: false, count: 18 }));
+
+try { animateSlide(document.querySelector('.slide.active')); } catch(e) { console.warn('Initial animation error:', e); }
+</script>
+
+</body>
+</html>
