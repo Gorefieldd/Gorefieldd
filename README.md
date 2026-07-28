@@ -94,7 +94,7 @@ SOC Analysts (L1-L3)
 Penetration Testers / Red Team
 Reverse Engineers / Malware Analysts
 EDR & Detection Engineers
-Security Researchers (AI/ML background a plus)
+Security Researchers
 CISO / Head of Security
 </pre>
 
