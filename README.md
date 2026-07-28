@@ -12,7 +12,7 @@
 </pre>
 
 <h1><code>whoami --full</code></h1>
-<p><strong>Recruitment Manager — InfoSec &amp; HR Talent Ops</strong></p>
+<p><strong>Recruitment Manager — InfoSec &amp;</strong></p>
 
 <p>Nizhny Novgorod, Russia · Remote-ready · Relocation OK</p>
 <p>
