@@ -1,63 +1,71 @@
-text
-██╗  ██╗██╗██████╗ █████╗
-██║  ██║██║██╔══██╗██╔══╝
-███████║██║█████╔╝█████╗  
+<div align="center">
+  
+██╗  ██╗██╗██████╗ ███████╗
+██║  ██║██║██╔══██╗██╔════╝
+███████║██║██████╔╝█████╗  
 ██╔══██║██║██╔══██╗██╔══╝  
-██║  ██║██║██║  ██║█████╗
-╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚════╝
-Artem Koshmov
-Recruitment Manager — InfoSec & HR Talent Ops
+██║  ██║██║██║  ██║███████╗
+╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚══════╝
 
-Nizhny Novgorod, Russia · Remote-ready · Relocation OK
+whoami --full
+Recruitment Manager // InfoSec & HR Talent Ops // Since 2020
+[
+[
+[
+[
 
-Telegram: @Gorefield · Email · Phone: +7 953 567-5756
+</div>
 
-Summary
-Recruitment Manager with 5 years 10 months of experience across in-house and agency recruitment, specializing in Information Security hiring (SOC, EDR, Pentest, Reverse Engineering, Malware Analysis, R&D) and broader HR management. Currently leading a team of 5 recruiters. Open to full-time, part-time, or project-based work — remote or on-site.
+> system.status
+text
+role:         Recruitment Manager — InfoSec & HR
+location:     Nizhny Novgorod, Russia [remote_ready: true]
+experience:   5 years 10 months
+specialty:    [SOC, EDR, Pentest, Reverse Engineering, Malware Analysis, R&D]
+team_led:     5 recruiters (3 mid, 1 senior, 1 junior)
+english:      B1 (targeting IELTS — 2027)
+employment:   Full-time / Part-time / Project-based
+status:       OPEN_TO_OPPORTUNITIES 🟢
+> quick_access.links
+<div align="center">
 
-English: B1, targeting IELTS in 2027
-Status: Open to opportunities
+📄 Resume (EN)	🎯 Interactive Deck	💼 LinkedIn	✈️ Telegram
+Download PDF	Launch Presentation	Connect	@Gorefield
+</div>
 
-Quick Access
-Download Resume (PDF)
+> exec.log --recent
+text
++ [2023-PRESENT] Positive Technologies — InfoSec Recruitment Lead
++   → Built InfoSec recruiting function from zero
++   → Team of 5 → record KPI performance
++   → Deployed AI-driven sourcing + Jira ATS + onboarding automation
 
-View Interactive Presentation
++ [2022-2023] Positive Technologies — InfoSec Recruiter
++   → Closed niche roles: pentesters, reverse engineers, malware analysts
++   → Sourced R&D devs: C/C++, Assembly, Rust, Golang, Python
 
-Message me on Telegram
++ [2020-2022] Kelly Services / AGAT Group — Talent Acquisition / HR Manager
++   → Full-cycle recruiting, workforce planning, market analysis
+> tech_stack.recruitment
+<div align="center">
 
-Experience
-Positive Technologies — InfoSec Recruitment Lead
-May 2023 – Present
-Built the InfoSec recruiting function from zero and grew a team of 5 recruiters to record KPI performance. Deployed AI-driven sourcing, Jira as ATS, and onboarding automation.
+</div>
 
-Positive Technologies — InfoSec Recruiter
-Apr 2022 – May 2023
-Closed highly specialized roles: penetration testers, reverse engineers, malware analysts. Sourced R&D developers across C/C++, Assembly, Rust, Golang, and Python.
+> target_roles.grep
+bash
+$ grep -r "hiring" ./infosec_market/
+> SOC Analysts (L1-L3)
+> Penetration Testers / Red Team
+> Reverse Engineers / Malware Analysts
+> EDR & Detection Engineers
+> Security Researchers (AI/ML background a plus)
+> CISO / Head of Security
+<div align="center">
 
-Kelly Services — Talent Acquisition Expert
-Mar 2021 – Apr 2022
-Full-cycle recruiting, client consulting, workforce planning, and labor market analysis for external clients.
+> connect() { echo "Let's talk cybersecurity hiring"; }
+[
 
-AGAT Group — HR Manager
-Jul 2020 – Feb 2021
-Full-cycle HR: recruiting, job profiling, onboarding, employee development, training, and motivation programs.
+<sub>Resume last synced: July 28, 2026 · Nizhny Novgorod, RU 🇷🇺</sub>
 
-Tech Stack
-Huntflow · E-Staff · Jira · Boolean Search · Excel/VBA · HR Brand Management · CRM
+</div>
 
-Target Roles
-SOC Analysts (L1–L3)
-
-Penetration Testers / Red Team
-
-Reverse Engineers / Malware Analysts
-
-EDR & Detection Engineers
-
-Security Researchers (AI/ML background a plus)
-
-CISO / Head of Security
-
-Let's talk cybersecurity hiring — reach out on Telegram
-
-Resume last synced: July 28, 2026 · Nizhny Novgorod, RU
