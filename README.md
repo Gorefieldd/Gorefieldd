@@ -14,6 +14,7 @@
 <h1><code>whoami --full</code></h1>
 <p><strong>Recruitment Manager — InfoSec &amp; IT talents acquisition expert</strong></p>
 
+
 <p>Nizhny Novgorod, Russia · Remote-ready · Relocation OK</p>
 <p>
 <a href="https://t.me/Gorefield">Telegram: @Gorefield</a> ·
