@@ -46,7 +46,7 @@ status: OPEN_TO_OPPORTUNITIES 🟢
 <p align="center">
 <a href="./resume.pdf">📄 Resume (EN)</a>
 &nbsp;|&nbsp;
-<a href="./koshmov-resume.slides.html">🎯 Interactive Deck</a>
+<a href="./resume_slides.html">🎯 Interactive Deck</a>
 &nbsp;|&nbsp;
 <a href="https://t.me/Gorefield">✈️ Telegram</a>
 </p>
